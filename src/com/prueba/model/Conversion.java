@@ -2,6 +2,8 @@ package com.prueba.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class Conversion {
 
@@ -21,6 +23,7 @@ public class Conversion {
         this.setTazasConversion(null);
         this.setLongitudArreglo(0);
         this.setTazasAsociativo(null);
+
     }
 
     public void setResult(String result){
@@ -97,9 +100,188 @@ public class Conversion {
     }//fin obtenerTazasConversion
 
     public int mostrarMenu(){
-        return 0;
+        int opcion = 0;
+        Scanner capturarOpcion = new Scanner(System.in);
+        try{
+            while(opcion != 7 ){
+                System.out.println("*******************************************");
+                System.out.println("Sea bienvenido/a al conversor de Moneda =] \n");
+                System.out.println("1) Dolar => Peso argentino");
+                System.out.println("2) Peso argentino => Dolar \n");
+                System.out.println("3) Dolar => Real Brasileno");
+                System.out.println("4) Real Brasileno => Dolar \n");
+                System.out.println("5) Dolar => Peso Colombiano");
+                System.out.println("6) Peso Colombiano => Dolar \n");
+                System.out.println("7) Salir");
+                System.out.println("Elija una Opción válida");
+                opcion = capturarOpcion.nextInt();
+
+                String mensajeUsuario = "";
+                String mensajeSalida = "";
+                Double valorAtrapado=0.0;
+                Double valorCalculado =0.0;
+                DecimalFormat df = new DecimalFormat("0.00");
+                String numeroFormateado = "";
+                switch(opcion){
+                    case 1:
+                        mensajeUsuario = "Ingrese el valor en dólares que desea convertir a pesos argentinos";
+                        valorAtrapado = atraparDatos(mensajeUsuario);
+                        if(valorAtrapado != 99.0){
+                            valorCalculado = dolarAPesoArgentino(valorAtrapado);
+                            numeroFormateado = df.format(valorCalculado);//formato con dos cifras decimales
+                            mensajeSalida = "El valor "+valorAtrapado+"[USD] convertido a pesos argentinos es de "+numeroFormateado+"[ARS]";
+                        }
+                        else{
+                            mensajeSalida= "Error ingresando datos";
+                        }
+                        break;
+                    case 2:
+                        mensajeUsuario = "Ingrese el valor en Pesos argentinos que desea convertir a dólares";
+                        valorAtrapado = atraparDatos(mensajeUsuario);
+                        if(valorAtrapado != 99.0){
+                            valorCalculado = pesoArgentinoADolar(valorAtrapado);
+                            numeroFormateado = df.format(valorCalculado);//formato con dos cifras decimales
+                            mensajeSalida = "El valor "+valorAtrapado+"[ARS] convertido a dólares es de "+numeroFormateado+"[USD]";
+                        }
+                        else{
+                            mensajeSalida= "Error ingresando datos";
+                        }
+                        break;
+                    case 3:
+                        mensajeUsuario = "Ingrese el valor en dólares que desea convertir a real brasileño";
+                        valorAtrapado = atraparDatos(mensajeUsuario);
+                        if(valorAtrapado != 99.0){
+                            valorCalculado = dolarARealBrasileno(valorAtrapado);
+                            numeroFormateado = df.format(valorCalculado);//formato con dos cifras decimales
+                            mensajeSalida = "El valor "+valorAtrapado+"[USD] convertido a real brasileño es de "+numeroFormateado+"[BRL]";
+                        }
+                        else{
+                            mensajeSalida= "Error ingresando datos";
+                        }
+                        break;
+                    case 4:
+                        mensajeUsuario = "Ingrese el valor en Reales Brasileños que desea convertir a dólares";
+                        valorAtrapado = atraparDatos(mensajeUsuario);
+                        if(valorAtrapado != 99.0){
+                            valorCalculado = realBrasilenoADolar(valorAtrapado);
+                            numeroFormateado = df.format(valorCalculado);//formato con dos cifras decimales
+                            mensajeSalida = "El valor "+valorAtrapado+"[BRL] convertido a dólares es de "+numeroFormateado+"[USD]";
+                        }
+                        else{
+                            mensajeSalida= "Error ingresando datos";
+                        }
+                        break;
+                    case 5:
+                        mensajeUsuario = "Ingrese el valor en dólares que desea convertir a peso colombiano";
+                        valorAtrapado = atraparDatos(mensajeUsuario);
+                        if(valorAtrapado != 99.0){
+                            valorCalculado = dolarAPesoColombiano(valorAtrapado);
+                            numeroFormateado = df.format(valorCalculado);//formato con dos cifras decimales
+                            mensajeSalida = "El valor "+valorAtrapado+"[USD] convertido a peso colombiano es de "+numeroFormateado+"[COP]";
+                        }
+                        else{
+                            mensajeSalida= "Error ingresando datos";
+                        }
+                        break;
+                    case 6:
+                        mensajeUsuario = "Ingrese el valor en Pesos Colombianos que desea convertir a dólares";
+                        valorAtrapado = atraparDatos(mensajeUsuario);
+                        if(valorAtrapado != 99.0){
+                            valorCalculado = pesoColombianoADolar(valorAtrapado);
+                            numeroFormateado = df.format(valorCalculado);//formato con dos cifras decimales
+                            mensajeSalida = "El valor "+valorAtrapado+"[COP] convertido a dólares es de "+numeroFormateado+"[USD]";
+                        }
+                        else{
+                            mensajeSalida= "Error ingresando datos";
+                        }
+
+                        break;
+                    case 7:
+                        mensajeSalida= "Eligió Opción Salir";
+                        break;
+                    default:
+                        break;
+                }
+                System.out.println("==================================");
+                System.out.println("El resultado se mostrará por 10 segundos.");
+                System.out.println(mensajeSalida);
+                System.out.println("==================================");
+                Thread.sleep(10000); // Pause for 2 seconds
+                System.out.println("*******************************************");
+            }
+
+            return 0;
+        }
+        catch(Exception e){
+            System.out.println("Excepción en la captura de datos. Digite solo números. "+e.getMessage());
+            return 99;
+        }
+
+    }// fin mostrar menu
+
+    public Double atraparDatos(String mensaje){
+        Double valorIngresado=0.0;
+        Scanner capturar = new Scanner(System.in);
+        try{
+            System.out.println(mensaje);
+            valorIngresado = capturar.nextDouble();
+            return valorIngresado;
+        }
+        catch(Exception e){
+            System.out.println("Excepcion en la captura de datos. Digite solo numeros. "+e.getMessage());
+            return 99.0;
+        }
+
+    }// fin atraparDatos
+
+    public Double dolarAPesoArgentino(Double dolar){
+
+        Double factorConversion = this.getTazasAsociativo().get("ARS"); // OBTENEMOS DEL ARREGLO ASOCIATIVO EL FACTOR DE CONVERSION, DE ACUERDO CON LA SIGLA DEL PAIS
+        Double pesoArgentino = dolar * factorConversion;
+        return pesoArgentino;
+
     }
 
+
+    public Double pesoArgentinoADolar(Double pesoArgentino){
+
+        Double factorConversion = this.getTazasAsociativo().get("ARS"); // OBTENEMOS DEL ARREGLO ASOCIATIVO EL FACTOR DE CONVERSION, DE ACUERDO CON LA SIGLA DEL PAIS
+        Double dolar= pesoArgentino / factorConversion;
+        return dolar;
+
+    }
+
+    public Double dolarARealBrasileno(Double dolar){
+
+        Double factorConversion = this.getTazasAsociativo().get("BRL"); // OBTENEMOS DEL ARREGLO ASOCIATIVO EL FACTOR DE CONVERSION, DE ACUERDO CON LA SIGLA DEL PAIS
+        Double realBrasileno = dolar * factorConversion;
+        return realBrasileno;
+
+    }
+
+    public Double realBrasilenoADolar(Double realBrasileno){
+
+        Double factorConversion = this.getTazasAsociativo().get("BRL"); // OBTENEMOS DEL ARREGLO ASOCIATIVO EL FACTOR DE CONVERSION, DE ACUERDO CON LA SIGLA DEL PAIS
+        Double dolar= realBrasileno / factorConversion;
+        return dolar;
+
+    }
+
+    public Double dolarAPesoColombiano(Double dolar){
+
+        Double factorConversion = this.getTazasAsociativo().get("COP"); // OBTENEMOS DEL ARREGLO ASOCIATIVO EL FACTOR DE CONVERSION, DE ACUERDO CON LA SIGLA DEL PAIS
+        Double pesoColombiano = dolar * factorConversion;
+        return pesoColombiano;
+
+    }
+
+    public Double pesoColombianoADolar(Double pesoColombiano){
+
+        Double factorConversion = this.getTazasAsociativo().get("COP"); // OBTENEMOS DEL ARREGLO ASOCIATIVO EL FACTOR DE CONVERSION, DE ACUERDO CON LA SIGLA DEL PAIS
+        Double dolar= pesoColombiano / factorConversion;
+        return dolar;
+
+    }
 
 
     // metodo toString para mostrar informacion del objeto imprimiendo directamente el objeto sin invocar algun metodo
