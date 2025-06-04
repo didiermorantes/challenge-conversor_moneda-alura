@@ -1,0 +1,10 @@
+oooooooooooooooooooooooooooooooooooooooo
+ Salida metodo toString() clase Titulo 
+ Titulo de la pelicula: Matrix
+ Fecha de lanzamiento de la pelicula: 01 Mar 1993
+ Duracion de la pelicula: 60 min
+ Genero de la pelicula: Action, Drama, Fantasy
+ Director de lanzamiento de la pelicula: N/A
+ Trama de la pelicula: Hitman Steven Matrix is shot, experiences afterlife, gets second chance by helping others. Wakes up, meets guides assigning cases where he aids people using unorthodox methods from past profession.
+ Pais de la pelicula: Canada
+ oooooooooooooooooooooooooooooooooooooooo
